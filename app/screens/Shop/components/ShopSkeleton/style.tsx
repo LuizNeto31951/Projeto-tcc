@@ -1,8 +1,12 @@
 import styled from "styled-components/native"
 
-export const ItemContainer = styled.TouchableOpacity`
+interface ItemContainerProps {
+        isSolo: boolean;
+}
+
+export const ItemContainer = styled.TouchableOpacity<ItemContainerProps>`
         height: 230px;
-        width: 45%;
+        width: ${({ isSolo }) => isSolo ? '45' : '90'}%;
         background-color: #F3F4F6;
         border-width: 1px;
         border-color: "#DBEAFE";
