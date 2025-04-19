@@ -1,11 +1,11 @@
 import { Stack } from 'expo-router';
-import Home from '../screens/Home';
+import Shop from '../screens/Shop';
 
 export default function HomeScreen() {
     return (
         <>
-            <Stack.Screen options={{ title: 'Planejador' }} />
-            <Home />
+            <Stack.Screen options={{ title: 'Loja' }} />
+            <Shop />
         </>
     );
 }
