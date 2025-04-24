@@ -1,6 +1,5 @@
 import React from "react";
-import { Button, Container } from "./styles";
-import { Text } from "react-native";
+import { Button, Container, ButtonText } from "./styles";
 import { Weekday } from "@/app/types/types";
 
 interface WeekdaySelectorProps {
@@ -19,16 +18,22 @@ const DAYS: { label: string; value: Weekday }[] = [
 ];
 
 const WeekdaySelector: React.FC<WeekdaySelectorProps> = ({ selectedDay, onDaySelect }) => {
-
     return (
         <Container>
             {DAYS.map((day) => (
                 <Button
-                    key={day.label}
+                    key={day.value}
                     onPress={() => onDaySelect(day.value)}
                     selected={selectedDay === day.value}
+                    activeOpacity={0.8}
                 >
-                    <Text>{day.label.toUpperCase()}</Text>
+                    <ButtonText
+                        selected={selectedDay === day.value}
+                        adjustsFontSizeToFit
+                        numberOfLines={1}
+                    >
+                        {day.label.toUpperCase()}
+                    </ButtonText>
                 </Button>
             ))}
         </Container>

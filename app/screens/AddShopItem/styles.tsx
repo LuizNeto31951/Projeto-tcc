@@ -43,8 +43,10 @@ export const ButtonText = styled.Text`
 `
 
 export const ImagePreview = styled.Image`
-  width: 100%;
+  width: 60%;
   height: 180px;
+  align-self:center;
+  margin-top: 12px;
   border-radius: 12px;
   margin-bottom: 16px;
 `;

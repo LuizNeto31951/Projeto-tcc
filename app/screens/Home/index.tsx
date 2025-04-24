@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { AddButton, Container, ToDoList } from "./styles";
 import ToDoCard from './components/ToDoCard';
@@ -6,16 +6,29 @@ import { ToDo } from '../../types/types';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/app/store';
 import { Creators as daySelectorActions } from '@/app/store/ducks/daySelector';
+import { Creators as toDoActions } from '@/app/store/ducks/toDos';
 import WeekdaySelector from './components/WeekdaySelector';
 import { RelativePathString, router } from 'expo-router';
 import { View } from "react-native";
 import { Text } from "react-native";
-import { timeToMinutes } from "@/app/utils/functions";
+import { isOneWeekPassed, timeToMinutes } from "@/app/utils/functions";
 
 export default function Home() {
     const dispatch = useDispatch();
-    const { toDos } = useSelector((state: RootState) => state.toDos);
+    const { toDos, lastResetDate } = useSelector((state: RootState) => state.toDos);
     const { selectedDay } = useSelector((state: RootState) => state.daySelector);
+
+    useEffect(() => {
+        const today = new Date().toISOString();
+
+        if (!lastResetDate) {
+            dispatch(toDoActions.setLastResetDate(today));
+        } else if (isOneWeekPassed(lastResetDate)) {
+            dispatch(toDoActions.resetAllToDos());
+            dispatch(toDoActions.setLastResetDate(today));
+        }
+    }, [lastResetDate]);
+
 
     const filteredToDos = toDos ? toDos.filter((todo) => todo.days.includes(selectedDay)).sort((a, b) => timeToMinutes(a.startTime || "00:00") - timeToMinutes(b.startTime || "00:00")) : [];
 
@@ -45,7 +58,7 @@ export default function Home() {
                 keyExtractor={(item: ToDo) => item.id}
             /> : <View style={{ marginTop: '20%', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <Text style={{ fontSize: 20 }}>
-                    Sem rotinas adicionas para esse dia!
+                    Sem rotinas adicionadas para esse dia!
                 </Text>
             </View>}
 

@@ -5,9 +5,14 @@ type Weekday = 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'fri
 interface DaySelectorState {
     selectedDay: Weekday;
 }
+const getTodayAsWeekday = (): Weekday => {
+    const days: Weekday[] = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+    const todayIndex = new Date().getDay();
+    return days[todayIndex];
+};
 
 const initialState: DaySelectorState = {
-    selectedDay: 'sunday',
+    selectedDay: getTodayAsWeekday(),
 };
 
 type SelectDayAction = {

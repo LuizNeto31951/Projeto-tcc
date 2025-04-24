@@ -20,3 +20,12 @@ export const timeToMinutes = (time: string) => {
     const [hours, minutes] = time.split(":").map(Number);
     return hours * 60 + minutes;
 };
+
+export function isOneWeekPassed(dateString: string): boolean {
+    const lastDate = new Date(dateString);
+    const now = new Date();
+    const diffInMs = now.getTime() - lastDate.getTime();
+    const oneWeekInMs = 7 * 24 * 60 * 60 * 1000;
+
+    return diffInMs >= oneWeekInMs;
+}

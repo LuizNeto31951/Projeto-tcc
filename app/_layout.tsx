@@ -14,7 +14,6 @@ export default function RootLayout() {
         <PersistGate persistor={persistor}>
           <Stack>
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="screens/AddToDo" />
             <Stack.Screen name="+not-found" />
           </Stack>
           <StatusBar style="auto" />

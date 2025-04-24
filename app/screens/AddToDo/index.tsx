@@ -29,7 +29,7 @@ type ToDoFormData = {
 const todoSchema = yup.object({
     title: yup.string().required("O título é obrigatório"),
     description: yup.string().optional(),
-    coins: yup.number().min(0).max(9).optional(),
+    coins: yup.number().min(0).max(10, "Minimo de 0 e maximo de 10 moedas por rotina!").optional(),
     days: yup
         .array()
         .of(yup.mixed<Weekday>().oneOf([
@@ -128,9 +128,9 @@ export default function AddToDo() {
                     name="coins"
                     render={({ field: { onChange, value } }) => (
                         <Input
-                            placeholder="0 a 9"
+                            placeholder="0 a 10"
                             keyboardType="numeric"
-                            maxLength={1}
+                            maxLength={10}
                             value={String(value || '')}
                             onChangeText={(text) => onChange(Number(text))}
                         />
@@ -149,7 +149,7 @@ export default function AddToDo() {
                 {errors.days && <ErrorText>{errors.days.message}</ErrorText>}
 
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 15 }}>
-                    <Label>Remover após completar?</Label>
+                    <Label>Remover ao final da semana?</Label>
                     <Controller
                         control={control}
                         name="shouldRemoveWhenComplete"
